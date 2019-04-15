@@ -9,6 +9,7 @@ class Crypto extends Component {
         super(props);
         this.state = {
             cryptoList: [],
+            savedCryptoList: [],
         }
     }
 
@@ -46,8 +47,9 @@ class Crypto extends Component {
     
               this.setState({
                 cryptoList: cryptoList,
+                savedCryptoList: cryptoList,
               });
-              
+
             });
     }
 
@@ -62,14 +64,18 @@ class Crypto extends Component {
       }
 
       onFilter = () => {
-          let filter = this.inputValue.value.trim().toUpperCase();
-          let filteredCryptoList = this.state.cryptoList;
-          filteredCryptoList = filteredCryptoList.filter((currency) => {
-              return currency.cur.includes(filter)});
-        //   console.log(this.inputValue.value);
+        let filter = this.inputValue.value.trim().toUpperCase();
+        let filteredCryptoList = this.state.cryptoList;
+        // let savedCryptoList = this.state.cryptoList
+        console.log(filteredCryptoList);
+        filteredCryptoList = this.state.savedCryptoList.filter((currency) => {
+          return currency.cur.includes(filter)});
+        console.log(filteredCryptoList);
+        
         this.setState({
-            cryptoList: filteredCryptoList,
-        })
+          cryptoList: filteredCryptoList,
+        });
+           
       }
     
 
@@ -77,8 +83,12 @@ class Crypto extends Component {
 
       return (
         <div className="crypto">
-            <input type="text" placeholder="filter" ref={input => this.inputValue = input} onChange = {this.onFilter}/>
-            <CryptoList cryptoList = {this.state.cryptoList}/>
+          <header className="main-header">
+            <h1>current bitcoin course</h1>
+            <i className="fab fa-bitcoin"></i>
+          </header>
+          <input type="text" className="search-box" placeholder="Search by currency" ref={input => this.inputValue = input} onChange = {this.onFilter}/>
+          <CryptoList cryptoList = {this.state.cryptoList}/>
         </div>
       );
     }
